@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_unavailable_internet">Unavailable internet</string>
+    <string name="error_unavailable_backend">Unavailable backend</string>
+    <string name="error_backend">Error backend</string>
+    <string name="error_invalid_response_from_backend">Invalid response from backend</string>
+    <string name="error_response_null_from_backend">Response null from backend</string>
+
+    <string name="general_number">Number</string>
+
+    <string name="fragment_main_get_fact">Get fact</string>
+    <string name="fragment_main_get_random_fact">Get random fact</string>
+    <string name="fragment_main_number_error">Enter a value in the range 0..9999</string>
+</resources>
