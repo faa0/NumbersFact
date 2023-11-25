@@ -2,9 +2,8 @@ package com.fara.feature_home_domain.domain.usecase.numbers
 
 import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.feature_home_domain.data.local.repository.NumberHistoryRepository
-import javax.inject.Inject
 
-internal class GetNumberHistoryByIdUseCaseImpl @Inject constructor(
+internal class GetNumberHistoryByIdUseCaseImpl(
     private val repository: NumberHistoryRepository
 ): GetNumberHistoryByIdUseCase {
 

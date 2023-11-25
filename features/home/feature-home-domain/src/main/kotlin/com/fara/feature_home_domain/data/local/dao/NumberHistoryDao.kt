@@ -14,11 +14,11 @@ interface NumberHistoryDao {
     fun getNumbersHistoryFlow(): Flow<List<NumberHistory>>
 
     @Query("SELECT * FROM numbersHistory WHERE id =:numberId")
-    suspend fun getNumberHistoryById(numberId: Int): NumberHistory?
+    fun getNumberHistoryById(numberId: Int): NumberHistory?
 
     @Query("SELECT EXISTS(SELECT * FROM numbersHistory WHERE text = :text)")
-    suspend fun isNumberHistoryExist(text: String): Boolean
+    fun isNumberHistoryExist(text: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNumberHistory(numberHistory: NumberHistory)
+    fun insertNumberHistory(numberHistory: NumberHistory)
 }

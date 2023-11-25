@@ -8,17 +8,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.Navigator
-import com.fara.core.base.actions.ActivityActions
 import com.fara.navigation.screen.SharedScreen
 import com.fara.numbersfact.R
-import com.fara.numbersfact.di.component.main.AppComponentHolder
 import com.fara.ui_components.compose.theme.DefaultTheme
 
-internal class MainActivity : ComponentActivity(), ActivityActions {
+internal class MainActivity : ComponentActivity() {
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppComponentHolder.getInternal().inject(this)
         super.onCreate(savedInstanceState)
 
         setContent {

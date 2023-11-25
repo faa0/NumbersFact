@@ -5,9 +5,8 @@ import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.feature_home_domain.domain.usecase.numbers.GetNumberHistoryByIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class DetailViewModelImpl @Inject constructor(
+internal class DetailViewModelImpl(
     private val getNumberHistoryByIdUseCase: GetNumberHistoryByIdUseCase
 ) : DetailViewModel() {
 

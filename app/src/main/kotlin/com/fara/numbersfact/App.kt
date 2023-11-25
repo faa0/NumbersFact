@@ -1,11 +1,14 @@
 package com.fara.numbersfact
 
 import android.app.Application
-import android.content.Context
 import cafe.adriel.voyager.core.registry.ScreenRegistry
-import com.fara.common_di.component.app.ApplicationComponentDependencies
-import com.fara.common_di.component.app.ApplicationComponentHolder
 import com.fara.feature_home.navigation.global.featureHomeScreenModule
+import com.fara.numbersfact.di.component.main.appComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.logger.Level
+import org.koin.dsl.module
 
 internal class App : Application() {
 
@@ -16,10 +19,13 @@ internal class App : Application() {
     }
 
     private fun initAppComponent() {
-        ApplicationComponentHolder.init(object : ApplicationComponentDependencies {
-            override val context: Context
-                get() = this@App
-        })
+        startKoin {
+            module {
+                androidContext(this@App)
+                androidLogger(level = Level.ERROR)
+                modules(appComponent)
+            }
+        }
     }
 
     private fun initGlobalNavigation() {

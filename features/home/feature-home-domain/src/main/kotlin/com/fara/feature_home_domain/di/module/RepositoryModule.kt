@@ -4,15 +4,10 @@ import com.fara.feature_home_domain.data.local.repository.NumberHistoryRepositor
 import com.fara.feature_home_domain.data.local.repository.NumberHistoryRepositoryImpl
 import com.fara.feature_home_domain.data.network.repository.NumberRepository
 import com.fara.feature_home_domain.data.network.repository.NumberRepositoryImpl
-import dagger.Binds
-import dagger.Module
+import org.koin.dsl.module
 
-@Module
-internal interface RepositoryModule {
+internal val repositoryModule = module {
+    factory<NumberRepository> { NumberRepositoryImpl(get(), get()) }
 
-    @Binds
-    fun bindNumberRepository(impl: NumberRepositoryImpl): NumberRepository
-
-    @Binds
-    fun bindNumberHistoryRepository(impl: NumberHistoryRepositoryImpl): NumberHistoryRepository
+    factory<NumberHistoryRepository> { NumberHistoryRepositoryImpl(get()) }
 }

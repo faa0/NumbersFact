@@ -3,9 +3,8 @@ package com.fara.feature_home_domain.domain.usecase.numbers
 import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.feature_home_domain.data.local.repository.NumberHistoryRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-internal class GetNumbersHistoryUseCaseImpl @Inject constructor(
+internal class GetNumbersHistoryUseCaseImpl(
     private val repository: NumberHistoryRepository
 ) : GetNumbersHistoryUseCase {
 

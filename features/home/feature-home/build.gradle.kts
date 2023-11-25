@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.AGP.library)
     kotlin(Plugins.Kotlin.android)
-    kotlin(Plugins.Kotlin.kapt)
 }
 
 android {
@@ -23,12 +22,17 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     buildFeatures {
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
+        kotlinCompilerExtensionVersion = Versions.compose
     }
 
     tasks.withType<Test> {
@@ -37,16 +41,13 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.COMMON_DI))
-    implementation(project(Modules.COMMON_UTILS))
     implementation(project(Modules.CORE))
     implementation(project(Modules.NAVIGATION))
     implementation(project(Modules.UI_COMPONENTS))
 
     implementation(project(Modules.FEATURE_HOME_DOMAIN))
 
-    implementation(Libraries.Dagger.dagger)
-    kapt(Libraries.Dagger.compiler)
+    implementation(Libraries.Koin.koin)
     implementation(Libraries.Lifecycle.viewModel)
     implementation(Libraries.Voyager.viewModel)
     implementation(Libraries.Voyager.navigator)

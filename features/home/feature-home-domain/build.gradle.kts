@@ -25,14 +25,16 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://numbersapi.com/\"")
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 dependencies {
-    implementation(project(Modules.COMMON_DI))
     implementation(project(Modules.COMMON_NETWORK))
-    implementation(project(Modules.COMMON_UTILS))
 
-    implementation(Libraries.Dagger.dagger)
-    kapt(Libraries.Dagger.compiler)
+    implementation(Libraries.Koin.koin)
     implementation(Libraries.Retrofit.retrofit)
     implementation(Libraries.Retrofit.moshiConverter)
     implementation(Libraries.Room.room)

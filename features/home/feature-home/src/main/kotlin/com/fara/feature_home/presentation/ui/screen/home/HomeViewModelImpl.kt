@@ -10,13 +10,12 @@ import com.fara.feature_home_domain.domain.usecase.numbers.GetRandomNumberUseCas
 import com.fara.feature_home_domain.domain.usecase.numbers.InsertNumberHistoryUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.IsNumberHistoryExistUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.NumberMatchesFormatUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class HomeViewModelImpl @Inject constructor(
+internal class HomeViewModelImpl(
     private val getInputNumberUseCase: GetInputNumberUseCase,
     private val getRandomNumberUseCase: GetRandomNumberUseCase,
     private val insertNumberHistoryUseCase: InsertNumberHistoryUseCase,

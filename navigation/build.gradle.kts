@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.AGP.library)
     kotlin(Plugins.Kotlin.android)
-    kotlin(Plugins.Kotlin.kapt)
 }
 
 android {
@@ -22,10 +21,13 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 dependencies {
-    implementation(Libraries.Dagger.dagger)
-    kapt(Libraries.Dagger.compiler)
-    implementation(Libraries.Fragment.fragment)
+    implementation(Libraries.Koin.koin)
     implementation(Libraries.Voyager.navigator)
 }

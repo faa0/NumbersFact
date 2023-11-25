@@ -19,12 +19,11 @@ rootProject.name = "NumbersFact"
 include(
         ":app",
         ":common:common-network",
-        ":common:common-di",
         ":core",
         ":navigation",
         ":ui-components"
 )
 include(
         ":features:home:feature-home",
-        ":features:home:feature-home-domain")
-include ':common:common-utils'
+        ":features:home:feature-home-domain"
+)

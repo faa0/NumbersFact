@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.AGP.application)
     kotlin(Plugins.Kotlin.android)
-    kotlin(Plugins.Kotlin.kapt)
 }
 
 android {
@@ -28,24 +27,28 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     buildFeatures {
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
+        kotlinCompilerExtensionVersion = Versions.compose
     }
+    namespace = "com.fara.numbersfact"
 
     dependencies {
-        implementation(project(Modules.COMMON_DI))
         implementation(project(Modules.CORE))
         implementation(project(Modules.NAVIGATION))
         implementation(project(Modules.UI_COMPONENTS))
 
         implementation(project(Modules.FEATURE_HOME))
 
-        implementation(Libraries.Dagger.dagger)
-        kapt(Libraries.Dagger.compiler)
+        implementation(Libraries.Koin.koin)
         implementation(Libraries.Core.core)
         implementation(Libraries.Coroutines.core)
         implementation(Libraries.Material.material)

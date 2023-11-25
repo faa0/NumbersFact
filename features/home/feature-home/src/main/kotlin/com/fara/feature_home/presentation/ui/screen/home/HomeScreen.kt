@@ -31,30 +31,22 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.fara.common_di.utils.getDaggerViewModel
 import com.fara.core.utils.constants.Empty
-import com.fara.feature_home.di.component.HomeComponentHolder
 import com.fara.feature_home.presentation.ui.screen.detail.DetailScreen
 import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.ui_components.compose.theme.DefaultTheme
 import com.fara.ui_components.compose.view.NumberTextField
 import com.fara.ui_components.compose.view.RoundedButton
 import com.fara.ui_components.utils.UIString
-import javax.inject.Inject
+import org.koin.androidx.compose.koinViewModel
 
 internal class HomeScreen : AndroidScreen() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Composable
     override fun Content() {
-        HomeComponentHolder.getInternal().inject(this)
-
         DefaultTheme() {
             Screen()
         }
@@ -63,7 +55,7 @@ internal class HomeScreen : AndroidScreen() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun Screen() {
-        val viewModel: HomeViewModel = getDaggerViewModel(viewModelProviderFactory = viewModelFactory)
+        val viewModel = koinViewModel<HomeViewModel>()
         val localNavigator = LocalNavigator.currentOrThrow
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current

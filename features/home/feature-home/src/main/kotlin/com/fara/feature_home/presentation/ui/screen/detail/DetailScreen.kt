@@ -12,26 +12,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
 import cafe.adriel.voyager.androidx.AndroidScreen
-import com.fara.common_di.utils.getDaggerViewModel
 import com.fara.core.utils.constants.Empty
-import com.fara.feature_home.di.component.HomeComponentHolder
 import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.ui_components.compose.theme.DefaultTheme
-import javax.inject.Inject
+import org.koin.androidx.compose.koinViewModel
 
 internal class DetailScreen(
     private val numberId: Int
 ) : AndroidScreen() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Composable
     override fun Content() {
-        HomeComponentHolder.getInternal().inject(this)
-
         DefaultTheme {
             Screen()
         }
@@ -39,7 +31,7 @@ internal class DetailScreen(
 
     @Composable
     private fun Screen() {
-        val viewModel: DetailViewModel = getDaggerViewModel(viewModelProviderFactory = viewModelFactory)
+        val viewModel = koinViewModel<DetailViewModel>()
         val numberHistoryFlow = viewModel.numberHistoryFlow.collectAsState()
 
         LaunchedEffect(key1 = Unit) {

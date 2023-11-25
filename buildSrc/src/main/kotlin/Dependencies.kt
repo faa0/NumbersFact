@@ -5,16 +5,14 @@ object Versions {
     const val coroutines = "1.6.4"
     const val core = "1.8.0"
     const val material = "1.7.0"
-    const val fragment = "1.5.1"
     const val lifecycle = "2.5.1"
     const val voyager = "1.0.0-rc03"
-    const val dagger = "2.44.2"
+    const val koin = "3.4.3"
     const val retrofit = "2.9.0"
     const val okHttp = "4.10.0"
     const val moshi = "1.14.0"
     const val room = "2.4.2"
     const val compose = "1.3.1"
-    const val composeCompiler = "1.3.1"
     const val composeActivity = "1.6.1"
     const val jUnit = "5.10.0"
     const val mockito = "5.6.0"
@@ -36,10 +34,6 @@ object Libraries {
         const val material = "com.google.android.material:material:${Versions.material}"
     }
 
-    object Fragment {
-        const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-    }
-
     object Lifecycle {
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
         const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
@@ -51,9 +45,8 @@ object Libraries {
         const val viewModel = "cafe.adriel.voyager:voyager-androidx:${Versions.voyager}"
     }
 
-    object Dagger {
-        const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-        const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    object Koin {
+        const val koin = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
     }
 
     object Retrofit {

@@ -14,30 +14,20 @@ import com.fara.feature_home_domain.domain.usecase.numbers.IsNumberHistoryExistU
 import com.fara.feature_home_domain.domain.usecase.numbers.IsNumberHistoryExistUseCaseImpl
 import com.fara.feature_home_domain.domain.usecase.numbers.NumberMatchesFormatUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.NumberMatchesFormatUseCaseImpl
-import dagger.Binds
-import dagger.Module
+import org.koin.dsl.module
 
-@Module
-internal interface UseCaseModule {
+internal val useCaseModule = module {
+    factory<GetInputNumberUseCase> { GetInputNumberUseCaseImpl(get()) }
 
-    @Binds
-    fun getInputNumberUseCase(impl: GetInputNumberUseCaseImpl): GetInputNumberUseCase
+    factory<GetRandomNumberUseCase> { GetRandomNumberUseCaseImpl(get()) }
 
-    @Binds
-    fun getRandomNumberUseCase(impl: GetRandomNumberUseCaseImpl): GetRandomNumberUseCase
+    factory<GetNumberHistoryByIdUseCase> { GetNumberHistoryByIdUseCaseImpl(get()) }
 
-    @Binds
-    fun getNumberHistoryByIdUseCase(impl: GetNumberHistoryByIdUseCaseImpl): GetNumberHistoryByIdUseCase
+    factory<GetNumbersHistoryUseCase> { GetNumbersHistoryUseCaseImpl(get()) }
 
-    @Binds
-    fun getNumbersHistoryUseCase(impl: GetNumbersHistoryUseCaseImpl): GetNumbersHistoryUseCase
+    factory<InsertNumberHistoryUseCase> { InsertNumberHistoryUseCaseImpl(get(), get()) }
 
-    @Binds
-    fun insertNumberHistoryUseCase(impl: InsertNumberHistoryUseCaseImpl): InsertNumberHistoryUseCase
+    factory<IsNumberHistoryExistUseCase> { IsNumberHistoryExistUseCaseImpl(get()) }
 
-    @Binds
-    fun isNumberHistoryExistUseCase(impl: IsNumberHistoryExistUseCaseImpl): IsNumberHistoryExistUseCase
-
-    @Binds
-    fun numberMatchesFormatUseCase(impl: NumberMatchesFormatUseCaseImpl): NumberMatchesFormatUseCase
+    factory<NumberMatchesFormatUseCase> { NumberMatchesFormatUseCaseImpl() }
 }
