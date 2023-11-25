@@ -30,7 +30,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
+
 dependencies {
     implementation(project(Modules.COMMON_DI))
     implementation(project(Modules.COMMON_UTILS))
@@ -47,4 +52,10 @@ dependencies {
     implementation(Libraries.Voyager.navigator)
     implementation(Libraries.Compose.ui)
     implementation(Libraries.Compose.material)
+
+    testImplementation(Libraries.JUnit.jUnit)
+    testRuntimeOnly(Libraries.JUnit.jUnitEngine)
+    testImplementation(Libraries.JUnit.testing)
+    testImplementation(Libraries.Mockito.mockito)
+    testImplementation(Libraries.Coroutines.test)
 }

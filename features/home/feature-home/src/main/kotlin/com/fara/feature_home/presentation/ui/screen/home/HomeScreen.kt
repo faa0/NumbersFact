@@ -20,6 +20,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -35,7 +36,6 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.fara.common_di.utils.getDaggerViewModel
-import com.fara.common_utils.utils.ResultState
 import com.fara.core.utils.constants.Empty
 import com.fara.feature_home.di.component.HomeComponentHolder
 import com.fara.feature_home.presentation.ui.screen.detail.DetailScreen
@@ -68,43 +68,33 @@ internal class HomeScreen : AndroidScreen() {
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
 
-        val uiState = viewModel.uiState.collectAsState()
-        val numberInputFlow = viewModel.numberInputFlow.collectAsState()
-        val numbersHistory = viewModel.numbersHistoryFlow.collectAsState(emptyList())
-        val isSnackbarVisible = viewModel.isSnackbarVisibleFlow.collectAsState()
+        LaunchedEffect(true) {
+            viewModel.getNumbersHistory()
+        }
+
+        val uiState by viewModel.uiState.collectAsState()
 
         val listState = rememberLazyListState()
 
-        when (val uiStateValue = uiState.value) {
-            is ResultState.Loading -> {
-                if (uiStateValue.state) {
-                    //TODO need to add loader
-                } else {
-                    val numberInputFlowNotNullable = numberInputFlow.value ?: Empty.STRING
-                    ScreenContent(numberInputFlow = numberInputFlowNotNullable,
-                        numbersHistory = numbersHistory.value,
-                        isSnackbarVisible = isSnackbarVisible.value,
-                        listState = listState,
-                        onNumberChanged = viewModel::onNumberTextChanged,
-                        onClickInputNumber = {
-                            hideKeyboard(keyboardController, focusManager)
-                            viewModel.getInputNumber(numberInputFlowNotNullable.toInt())
-                        },
-                        onClickRandomNumber = {
-                            hideKeyboard(keyboardController, focusManager)
-                            viewModel.getRandomNumber()
-                        },
-                        onClickNumberItem = { numberId -> localNavigator.push(DetailScreen(numberId)) },
-                        onClickSnackbar = { viewModel.setSnackBarVisibility(false) })
-                }
-            }
-            is ResultState.Error -> {
-                //TODO need to add error view
-            }
-            is ResultState.Failure -> {
-                //TODO need to add failure view
-            }
-            is ResultState.Success -> Unit
+        if (uiState.isLoading) {
+            //TODO need to add loader
+        } else {
+            val numberInputFlowNotNullable = uiState.numberInput ?: Empty.STRING
+            ScreenContent(numberInputFlow = numberInputFlowNotNullable,
+                numbersHistory = uiState.numberHistory,
+                isSnackbarVisible = uiState.isSnackBarVisible,
+                listState = listState,
+                onNumberChanged = viewModel::onNumberTextChanged,
+                onClickInputNumber = {
+                    hideKeyboard(keyboardController, focusManager)
+                    viewModel.getInputNumber(numberInputFlowNotNullable.toInt())
+                },
+                onClickRandomNumber = {
+                    hideKeyboard(keyboardController, focusManager)
+                    viewModel.getRandomNumber()
+                },
+                onClickNumberItem = { numberId -> localNavigator.push(DetailScreen(numberId)) },
+                onClickSnackbar = { viewModel.setSnackBarVisibility(false) })
         }
     }
 

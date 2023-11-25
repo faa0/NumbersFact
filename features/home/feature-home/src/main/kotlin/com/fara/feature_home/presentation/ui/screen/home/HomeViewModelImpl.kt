@@ -1,9 +1,8 @@
 package com.fara.feature_home.presentation.ui.screen.home
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
-import com.fara.common_utils.utils.ResultState
-import com.fara.common_utils.utils.fold
-import com.fara.core.utils.constants.Empty
+import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.feature_home_domain.domain.model.Number
 import com.fara.feature_home_domain.domain.usecase.numbers.GetInputNumberUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.GetNumbersHistoryUseCase
@@ -11,68 +10,81 @@ import com.fara.feature_home_domain.domain.usecase.numbers.GetRandomNumberUseCas
 import com.fara.feature_home_domain.domain.usecase.numbers.InsertNumberHistoryUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.IsNumberHistoryExistUseCase
 import com.fara.feature_home_domain.domain.usecase.numbers.NumberMatchesFormatUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 internal class HomeViewModelImpl @Inject constructor(
     private val getInputNumberUseCase: GetInputNumberUseCase,
     private val getRandomNumberUseCase: GetRandomNumberUseCase,
     private val insertNumberHistoryUseCase: InsertNumberHistoryUseCase,
-    getNumbersHistoryUseCase: GetNumbersHistoryUseCase,
+    private val getNumbersHistoryUseCase: GetNumbersHistoryUseCase,
     private val isNumberHistoryExistUseCase: IsNumberHistoryExistUseCase,
     private val numberMatchesFormatUseCase: NumberMatchesFormatUseCase
 ) : HomeViewModel() {
 
-    override val uiState = MutableStateFlow<ResultState<Unit>>(ResultState.Loading(false))
-
-    override val numberInputFlow = MutableStateFlow<String?>(null)
-    override val numbersHistoryFlow = getNumbersHistoryUseCase.invoke()
-    override val isSnackbarVisibleFlow = MutableStateFlow(false)
+    override val uiState = MutableStateFlow(HomeState())
 
     override fun onNumberTextChanged(text: String) {
-        numberInputFlow.value = text
+        uiState.update { it.copy(numberInput = text) }
     }
 
     override fun getInputNumber(inputNumber: Int) {
         val isNumberFormatValid = numberMatchesFormatUseCase.invoke(inputNumber)
-        isSnackbarVisibleFlow.value = !isNumberFormatValid
+        uiState.update { it.copy(isSnackBarVisible = !isNumberFormatValid) }
         if (!isNumberFormatValid) return
-        uiState.value = ResultState.Loading(true)
+        uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             getInputNumberUseCase.invoke(inputNumber).fold(
                 onSuccess = { number ->
                     insertNumberHistory(number)
-                    uiState.value = ResultState.Loading(false)
+                    uiState.update { it.copy(isLoading = false) }
                 },
-                onError = { code, message -> uiState.value = ResultState.Error(code, message) },
-                onFailure = { throwable -> uiState.value = ResultState.Failure(throwable) }
+                onFailure = { throwable -> uiState.update { it.copy(error = throwable) } }
             )
         }
     }
 
     override fun getRandomNumber() {
-        uiState.value = ResultState.Loading(true)
+        uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             getRandomNumberUseCase.invoke().fold(
                 onSuccess = { number ->
                     insertNumberHistory(number)
-                    uiState.value = ResultState.Loading(false)
+                    uiState.update { it.copy(isLoading = false) }
                 },
-                onError = { code, message -> uiState.value = ResultState.Error(code, message) },
-                onFailure = { throwable -> uiState.value = ResultState.Failure(throwable) }
+                onFailure = { throwable -> uiState.update { it.copy(error = throwable) } }
             )
         }
     }
 
+    override fun getNumbersHistory() {
+        viewModelScope.launch {
+            getNumbersHistoryUseCase.invoke().collectLatest { list ->
+                uiState.update { it.copy(numberHistory = list) }
+            }
+        }
+    }
+
     override fun setSnackBarVisibility(isVisible: Boolean) {
-        isSnackbarVisibleFlow.value = isVisible
+        uiState.update { it.copy(isSnackBarVisible = isVisible) }
     }
 
     private fun insertNumberHistory(number: Number) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             val isNumberHistoryExist = isNumberHistoryExistUseCase.invoke(number.text)
             if (!isNumberHistoryExist) insertNumberHistoryUseCase.invoke(number)
         }
     }
 }
+
+@Immutable
+data class HomeState(
+    val isLoading: Boolean = false,
+    val error: Throwable? = null,
+    val numberInput: String? = null,
+    val numberHistory: List<NumberHistory> = emptyList(),
+    val isSnackBarVisible: Boolean = false,
+)
