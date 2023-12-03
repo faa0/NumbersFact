@@ -1,0 +1,66 @@
+[versions]
+minSdk = "23"
+targetSdk = "34"
+compileSdk = "34"
+
+androidGradlePlugin = "8.1.4"
+kotlin = "1.9.20"
+
+coroutines = "1.7.3"
+core = "1.12.0"
+material = "1.10.0"
+lifecycle = "2.6.2"
+voyager = "1.0.0-rc10"
+koin = "3.5.0"
+retrofit = "2.9.0"
+okhttp = "4.11.0"
+moshi = "1.15.0"
+room = "2.6.1"
+compose = "1.5.4"
+composeActivity = "1.8.1"
+junit = "5.10.1"
+mockito = "5.7.0"
+junitTesting = "2.2.0"
+
+[libraries]
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+lifecycle-viemodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
+voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
+voyager-androidx = { group = "cafe.adriel.voyager", name = "voyager-androidx", version.ref = "voyager" }
+
+koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+
+okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
+
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
+
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+junit-jupiter-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "junitTesting" }
+
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

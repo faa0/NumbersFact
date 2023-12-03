@@ -1,25 +1,24 @@
 plugins {
-    id(Plugins.AGP.library)
-    kotlin(Plugins.Kotlin.android)
-    kotlin(Plugins.Kotlin.kapt)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin)
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.fara.feature_home_domain"
-    compileSdk = AndroidConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.orNull?.toInt()
 
     defaultConfig {
-        minSdk = AndroidConfig.minSdk
-        targetSdk = AndroidConfig.targetSdk
+        minSdk = libs.versions.minSdk.orNull?.toInt()
     }
 
     buildTypes {
-        getByName(AndroidConfig.release) {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "BASE_URL", "\"http://numbersapi.com/\"")
         }
-        getByName(AndroidConfig.debug) {
+        getByName("debug") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "BASE_URL", "\"http://numbersapi.com/\"")
@@ -31,17 +30,21 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     buildFeatures {
         buildConfig = true
     }
 }
 dependencies {
-    implementation(project(Modules.COMMON_NETWORK))
+    implementation(project(":common:common-network"))
 
-    implementation(Libraries.Koin.koin)
-    implementation(Libraries.Retrofit.retrofit)
-    implementation(Libraries.Retrofit.moshiConverter)
-    implementation(Libraries.Room.room)
-    implementation(Libraries.Room.runtime)
-    kapt(Libraries.Room.compiler)
+    implementation(libs.koin)
+    implementation(libs.retrofit)
+    implementation(libs.moshi.adapters)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
 }

@@ -1,4 +1,4 @@
-package com.fara.ui_components
+package com.fara.ui_components.compose.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color

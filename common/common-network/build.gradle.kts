@@ -1,25 +1,24 @@
 plugins {
-    id(Plugins.AGP.library)
-    kotlin(Plugins.Kotlin.android)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin)
 }
 
 android {
     namespace = "com.fara.common_network"
-    compileSdk = AndroidConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.orNull?.toInt()
 
     defaultConfig {
-        minSdk = AndroidConfig.minSdk
-        targetSdk = AndroidConfig.targetSdk
+        minSdk = libs.versions.minSdk.orNull?.toInt()
     }
 
     buildTypes {
-        getByName(AndroidConfig.release) {
+        getByName("release") {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "BASE_URL", "\"http://numbersapi.com/\"")
         }
 
-        getByName(AndroidConfig.debug) {
+        getByName("debug") {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "BASE_URL", "\"http://numbersapi.com/\"")
         }
@@ -30,16 +29,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     buildFeatures {
         buildConfig = true
     }
 }
 
 dependencies {
-    implementation(Libraries.Koin.koin)
-    implementation(Libraries.Retrofit.retrofit)
-    implementation(Libraries.Retrofit.moshiConverter)
-    implementation(Libraries.OkHttp.loggingInterceptor)
-    implementation(Libraries.Moshi.moshi)
-    implementation(Libraries.Moshi.adapter)
+    implementation(libs.koin)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
+    implementation(libs.okhttp.interceptor)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.adapters)
 }

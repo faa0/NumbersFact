@@ -7,7 +7,6 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import com.fara.ui_components.DefaultColor
 
 private val LightColorPalette = lightColors(
     primary = DefaultColor.Light().primary,

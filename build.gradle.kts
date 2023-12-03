@@ -1,5 +1,5 @@
 plugins {
-    id(Plugins.AGP.application) version Versions.AGP apply false
-    id(Plugins.AGP.library) version Versions.AGP apply false
-    kotlin(Plugins.Kotlin.android) version Versions.kotlin apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.kotlin) apply false
 }

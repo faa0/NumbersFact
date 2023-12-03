@@ -1,26 +1,27 @@
 plugins {
-    id(Plugins.AGP.application)
-    kotlin(Plugins.Kotlin.android)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.kotlin)
 }
 
 android {
-    compileSdk = AndroidConfig.compileSdk
+    namespace = "com.fara.numbersfact"
+    compileSdk = libs.versions.compileSdk.orNull?.toInt()
 
     defaultConfig {
         applicationId = "com.fara.numbersfact"
-        minSdk = AndroidConfig.minSdk
-        targetSdk = AndroidConfig.targetSdk
+        minSdk = libs.versions.minSdk.orNull?.toInt()
+        targetSdk = libs.versions.targetSdk.orNull?.toInt()
         versionCode = 1
         versionName = "1.0"
     }
 
     buildTypes {
-        getByName(AndroidConfig.release) {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
-        getByName(AndroidConfig.debug) {
+        getByName("debug") {
             applicationIdSuffix = ".debug"
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isDebuggable = true
@@ -32,31 +33,34 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = libs.versions.compose.orNull?.toString()
     }
-    namespace = "com.fara.numbersfact"
 
     dependencies {
-        implementation(project(Modules.CORE))
-        implementation(project(Modules.NAVIGATION))
-        implementation(project(Modules.UI_COMPONENTS))
+        implementation(project(":core"))
+        implementation(project(":navigation"))
+        implementation(project(":ui-components"))
 
-        implementation(project(Modules.FEATURE_HOME))
+        implementation(project(":features:home:feature-home"))
 
-        implementation(Libraries.Koin.koin)
-        implementation(Libraries.Core.core)
-        implementation(Libraries.Coroutines.core)
-        implementation(Libraries.Material.material)
-        implementation(Libraries.Compose.activity)
-        implementation(Libraries.Compose.ui)
-        implementation(Libraries.Compose.material)
-        implementation(Libraries.Voyager.viewModel)
-        implementation(Libraries.Voyager.navigator)
+        implementation(libs.koin)
+        implementation(libs.core)
+        implementation(libs.coroutines.core)
+        implementation(libs.material)
+        implementation(libs.compose.activity)
+        implementation(libs.compose.ui)
+        implementation(libs.compose.material)
+        implementation(libs.voyager.androidx)
+        implementation(libs.voyager.navigator)
     }
 }

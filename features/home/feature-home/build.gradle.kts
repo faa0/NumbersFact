@@ -1,23 +1,22 @@
 plugins {
-    id(Plugins.AGP.library)
-    kotlin(Plugins.Kotlin.android)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin)
 }
 
 android {
     namespace = "com.fara.feature_home"
-    compileSdk = AndroidConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.orNull?.toInt()
 
     defaultConfig {
-        minSdk = AndroidConfig.minSdk
-        targetSdk = AndroidConfig.targetSdk
+        minSdk = libs.versions.minSdk.orNull?.toInt()
     }
 
     buildTypes {
-        getByName(AndroidConfig.release) {
+        getByName("release") {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
-        getByName(AndroidConfig.debug) {
+        getByName("debug") {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -27,13 +26,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = libs.versions.compose.orNull
     }
 
     tasks.withType<Test> {
@@ -42,22 +45,22 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.CORE))
-    implementation(project(Modules.NAVIGATION))
-    implementation(project(Modules.UI_COMPONENTS))
+    implementation(project(":core"))
+    implementation(project(":navigation"))
+    implementation(project(":ui-components"))
 
-    implementation(project(Modules.FEATURE_HOME_DOMAIN))
+    implementation(project(":features:home:feature-home-domain"))
 
-    implementation(Libraries.Koin.koin)
-    implementation(Libraries.Lifecycle.viewModel)
-    implementation(Libraries.Voyager.viewModel)
-    implementation(Libraries.Voyager.navigator)
-    implementation(Libraries.Compose.ui)
-    implementation(Libraries.Compose.material)
+    implementation(libs.koin)
+    implementation(libs.lifecycle.viemodel)
+    implementation(libs.voyager.androidx)
+    implementation(libs.voyager.navigator)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material)
 
-    testImplementation(Libraries.JUnit.jUnit)
-    testRuntimeOnly(Libraries.JUnit.jUnitEngine)
-    testImplementation(Libraries.JUnit.testing)
-    testImplementation(Libraries.Mockito.mockito)
-    testImplementation(Libraries.Coroutines.test)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter.testing)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.coroutines.test)
 }

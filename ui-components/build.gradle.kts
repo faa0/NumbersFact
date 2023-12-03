@@ -1,23 +1,22 @@
 plugins {
-    id(Plugins.AGP.library)
-    kotlin(Plugins.Kotlin.android)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin)
 }
 
 android {
     namespace = "com.fara.ui_components"
-    compileSdk = AndroidConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.orNull?.toInt()
 
     defaultConfig {
-        minSdk = AndroidConfig.minSdk
-        targetSdk = AndroidConfig.targetSdk
+        minSdk = libs.versions.minSdk.orNull?.toInt()
     }
 
     buildTypes {
-        getByName(AndroidConfig.release) {
+        getByName("release") {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
-        getByName(AndroidConfig.debug) {
+        getByName("debug") {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -27,17 +26,21 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = libs.versions.compose.orNull
     }
 }
 
 dependencies {
-    implementation(Libraries.Compose.ui)
-    implementation(Libraries.Compose.material)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material)
 }
