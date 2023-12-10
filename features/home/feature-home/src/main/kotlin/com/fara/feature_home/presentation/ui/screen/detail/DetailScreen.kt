@@ -9,12 +9,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import com.fara.core.utils.constants.Empty
-import com.fara.feature_home_domain.data.local.entity.NumberHistory
 import com.fara.ui_components.compose.theme.DefaultTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,19 +32,19 @@ internal class DetailScreen(
     @Composable
     private fun Screen() {
         val viewModel = koinViewModel<DetailViewModel>()
-        val numberHistoryFlow = viewModel.numberHistoryFlow.collectAsState()
+        val uiState by viewModel.uiState.collectAsState()
 
         LaunchedEffect(key1 = Unit) {
             viewModel.getNumberHistoryById(numberId)
         }
 
         ScreenContent(
-            number = numberHistoryFlow.value
+            uiState = uiState
         )
     }
 
     @Composable
-    private fun ScreenContent(number: NumberHistory?) {
+    private fun ScreenContent(uiState: DetailState?) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -52,7 +52,7 @@ internal class DetailScreen(
         ) {
             HeaderText(
                 modifier = Modifier.padding(bottom = 16.dp),
-                text = number?.text ?: Empty.STRING,
+                text = uiState?.numberHistory?.text ?: Empty.STRING,
                 textColor = MaterialTheme.colors.error
             )
         }
