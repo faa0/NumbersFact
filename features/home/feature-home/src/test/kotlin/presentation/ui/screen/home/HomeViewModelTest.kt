@@ -207,7 +207,7 @@ class HomeViewModelTest {
             val expected = listOf(NumberHistory(number = 0, text = "test"))
             `when`(getNumberHistoryUseCase.invoke()).thenReturn(flowOf(expected))
 
-            getNumberHistoryUseCase.invoke()
+            viewModel.getNumbersHistory()
 
             testDispatcher.scheduler.advanceUntilIdle()
             val actual = viewModel.uiState.value.numberHistory
