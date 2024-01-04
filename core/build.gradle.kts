@@ -36,5 +36,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.lifecycle.viemodel)
+    api(libs.lifecycle.viemodel)
 }

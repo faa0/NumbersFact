@@ -39,10 +39,10 @@ android {
 }
 
 dependencies {
-    implementation(libs.koin)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter)
-    implementation(libs.okhttp.interceptor)
+    api(libs.koin)
+    api(libs.retrofit)
+    api(libs.okhttp.interceptor)
+    api(libs.moshi.adapters)
+    api(libs.retrofit.converter)
     implementation(libs.moshi.kotlin)
-    implementation(libs.moshi.adapters)
 }

@@ -35,6 +35,6 @@ android {
     }
 }
 dependencies {
-    implementation(libs.koin)
-    implementation(libs.voyager.navigator)
+    api(libs.koin)
+    api(libs.voyager.navigator)
 }

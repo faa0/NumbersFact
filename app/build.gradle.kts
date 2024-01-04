@@ -47,20 +47,11 @@ android {
     }
 
     dependencies {
-        implementation(project(":core"))
-        implementation(project(":navigation"))
-        implementation(project(":ui-components"))
-
         implementation(project(":features:home:feature-home"))
 
-        implementation(libs.koin)
         implementation(libs.core)
         implementation(libs.coroutines.core)
         implementation(libs.material)
         implementation(libs.compose.activity)
-        implementation(libs.compose.ui)
-        implementation(libs.compose.material)
-        implementation(libs.voyager.androidx)
-        implementation(libs.voyager.navigator)
     }
 }

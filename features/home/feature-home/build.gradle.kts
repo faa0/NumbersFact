@@ -45,18 +45,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":navigation"))
-    implementation(project(":ui-components"))
+    api(project(":core"))
+    api(project(":navigation"))
+    api(project(":ui-components"))
 
     implementation(project(":features:home:feature-home-domain"))
 
-    implementation(libs.koin)
-    implementation(libs.lifecycle.viemodel)
-    implementation(libs.voyager.androidx)
-    implementation(libs.voyager.navigator)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material)
+    api(libs.voyager.androidx)
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)

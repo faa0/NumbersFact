@@ -41,9 +41,6 @@ android {
 dependencies {
     implementation(project(":common:common-network"))
 
-    implementation(libs.koin)
-    implementation(libs.retrofit)
-    implementation(libs.moshi.adapters)
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
