@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
@@ -31,7 +30,7 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.fara.core.utils.constants.Empty
@@ -43,7 +42,7 @@ import com.fara.ui_components.compose.view.RoundedButton
 import com.fara.ui_components.utils.UIString
 import org.koin.androidx.compose.koinViewModel
 
-internal class HomeScreen : AndroidScreen() {
+internal class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -72,7 +71,8 @@ internal class HomeScreen : AndroidScreen() {
             //TODO need to add loader
         } else {
             val numberInputFlowNotNullable = uiState.numberInput ?: Empty.STRING
-            ScreenContent(numberInputFlow = numberInputFlowNotNullable,
+            ScreenContent(
+                numberInputFlow = numberInputFlowNotNullable,
                 numbersHistory = uiState.numberHistory,
                 isSnackbarVisible = uiState.isSnackBarVisible,
                 listState = listState,
@@ -136,13 +136,15 @@ internal class HomeScreen : AndroidScreen() {
                         onClick = onClickRandomNumber
                     )
                 }
-                NumbersList(numbersList = numbersHistory,
+                NumbersList(
+                    numbersList = numbersHistory,
                     listState = listState,
                     onItemClick = { numberId -> onClickNumberItem(numberId) })
             }
             if (isSnackbarVisible) {
                 RoundedSnackbar(
-                    modifier = Modifier.align(Alignment.BottomCenter), onClickSnackbar = onClickSnackbar
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    onClickSnackbar = onClickSnackbar
                 )
             }
         }
@@ -171,10 +173,11 @@ internal class HomeScreen : AndroidScreen() {
     private fun NumberItem(
         modifier: Modifier = Modifier, text: String, onItemClick: () -> Unit
     ) {
-        Row(modifier = Modifier
-            .then(modifier)
-            .fillMaxWidth()
-            .clickable { onItemClick.invoke() }) {
+        Row(
+            modifier = Modifier
+                .then(modifier)
+                .fillMaxWidth()
+                .clickable { onItemClick.invoke() }) {
             Text(
                 modifier = Modifier, text = text, color = MaterialTheme.colors.onError
             )
@@ -185,20 +188,32 @@ internal class HomeScreen : AndroidScreen() {
     private fun RoundedSnackbar(
         modifier: Modifier = Modifier, onClickSnackbar: () -> Unit
     ) {
-        Snackbar(modifier = Modifier.then(modifier), content = {
-            Text(
-                text = stringResource(id = UIString.fragment_main_number_error),
-                color = MaterialTheme.colors.onBackground
-            )
-        }, backgroundColor = MaterialTheme.colors.primary, shape = RoundedCornerShape(100.dp), action = {
-            ClickableText(text = AnnotatedString(text = stringResource(id = android.R.string.ok)),
-                style = MaterialTheme.typography.button.copy(color = MaterialTheme.colors.onBackground),
-                onClick = { onClickSnackbar.invoke() })
-        })
+        Snackbar(
+            modifier = Modifier.then(modifier),
+            content = {
+                Text(
+                    text = stringResource(id = UIString.fragment_main_number_error),
+                    color = MaterialTheme.colors.onBackground
+                )
+            },
+            backgroundColor = MaterialTheme.colors.primary,
+            shape = RoundedCornerShape(100.dp),
+            action = {
+                Text(
+                    modifier = Modifier.clickable(
+                        onClick = { onClickSnackbar() }
+                    ),
+                    text = AnnotatedString(text = stringResource(id = android.R.string.ok)),
+                    style = MaterialTheme.typography.button.copy(color = MaterialTheme.colors.onBackground),
+                )
+            })
     }
 
     @OptIn(ExperimentalComposeUiApi::class)
-    private fun hideKeyboard(keyboardController: SoftwareKeyboardController?, focusManager: FocusManager) {
+    private fun hideKeyboard(
+        keyboardController: SoftwareKeyboardController?,
+        focusManager: FocusManager
+    ) {
         keyboardController?.hide()
         focusManager.clearFocus()
     }

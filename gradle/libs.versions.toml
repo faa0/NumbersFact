@@ -1,25 +1,25 @@
 [versions]
 minSdk = "23"
-targetSdk = "34"
-compileSdk = "34"
+targetSdk = "36"
+compileSdk = "36"
 
-androidGradlePlugin = "8.2.0"
-kotlin = "1.9.20"
+androidGradlePlugin = "8.10.0"
+kotlin = "2.1.21"
 
-coroutines = "1.7.3"
-core = "1.12.0"
-material = "1.10.0"
-lifecycle = "2.6.2"
-voyager = "1.0.0-rc10"
-koin = "3.5.0"
-retrofit = "2.9.0"
-okhttp = "4.11.0"
-moshi = "1.15.0"
-room = "2.6.1"
-compose = "1.5.4"
-composeActivity = "1.8.1"
-junit = "5.10.1"
-mockito = "5.7.0"
+coroutines = "1.10.2"
+core = "1.16.0"
+material = "1.12.0"
+lifecycle = "2.9.0"
+voyager = "1.1.0-beta03"
+koin = "4.0.4"
+retrofit = "3.0.0"
+okhttp = "4.12.0"
+moshi = "1.15.2"
+room = "2.7.1"
+compose = "1.8.2"
+composeActivity = "1.10.1"
+junit = "5.12.2"
+mockito = "5.18.0"
 junitTesting = "2.2.0"
 
 [libraries]
@@ -34,7 +34,6 @@ lifecycle-viemodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel
 
 voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
-voyager-androidx = { group = "cafe.adriel.voyager", name = "voyager-androidx", version.ref = "voyager" }
 
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
@@ -64,3 +63,4 @@ mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mo
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

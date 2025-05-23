@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -50,8 +51,6 @@ dependencies {
     api(project(":ui-components"))
 
     implementation(project(":features:home:feature-home-domain"))
-
-    api(libs.voyager.androidx)
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)

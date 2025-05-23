@@ -13,14 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.core.screen.Screen
 import com.fara.core.utils.constants.Empty
 import com.fara.ui_components.compose.theme.DefaultTheme
 import org.koin.androidx.compose.koinViewModel
 
 internal class DetailScreen(
     private val numberId: Int
-) : AndroidScreen() {
+) : Screen {
 
     @Composable
     override fun Content() {
