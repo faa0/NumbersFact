@@ -37,6 +37,10 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
 dependencies {
     implementation(project(":common:common-network"))
@@ -44,4 +48,11 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
+
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.jupiter.platform.launcher)
+    testImplementation(libs.junit.jupiter.testing)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.coroutines.test)
 }
