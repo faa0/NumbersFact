@@ -54,6 +54,7 @@ dependencies {
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.jupiter.platform.launcher)
     testImplementation(libs.junit.jupiter.testing)
     testImplementation(libs.mockito.core)
     testImplementation(libs.coroutines.test)
